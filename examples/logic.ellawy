@@ -1,0 +1,11 @@
+function onCheck(num)
+	if num > 10 then
+	{
+		"status": "big"
+	}
+	else
+	{
+		"status": "small"
+	}
+	end
+end

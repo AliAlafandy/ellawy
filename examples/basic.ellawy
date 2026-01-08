@@ -1,0 +1,5 @@
+function onTest()
+{
+	"hello": "world"
+}
+end
