@@ -1,4 +1,4 @@
-function onConfig()
+function onConfig(server:string, host:{string}, port:{float})
 {
   "server": {"host": "localhost", "port": 8080}
 }

@@ -1,10 +1,8 @@
-function onCheck(num)
+function onCheck(num, status:string)
 	if num > 10 then
 	{
 		"status": "big"
-	}
-	else
-	{
+	} else {
 		"status": "small"
 	}
 	end
