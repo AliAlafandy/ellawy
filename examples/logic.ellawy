@@ -1,4 +1,4 @@
-function onCheck(num, status:string)
+function onCheck(num=float, status:string)
 	if num > 10 then
 	{
 		"status": "big"
