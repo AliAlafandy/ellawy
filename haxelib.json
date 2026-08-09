@@ -1,0 +1,19 @@
+{
+  "name": "ellawy",
+  "url": "https://github.com/AliAlafandy/ellawy",
+  "license": "MIT",
+  "tags": [
+    "language",
+    "compiler",
+    "parser",
+    "transpiler",
+    "haxe"
+  ],
+  "description": "Ellawy programming language and Haxe integration.",
+  "version": "1.0.0",
+  "classPath": "src",
+  "releasenote": "Initial release of the Ellawy Haxe library.",
+  "contributors": [
+    "Ali Alafandy"
+  ]
+}
