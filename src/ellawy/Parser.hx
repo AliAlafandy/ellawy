@@ -253,7 +253,7 @@ class Parser {
     inline function advance():Token return tokens[current++];
     inline function contains(a:Array<TokenType>, t:TokenType):Bool return Lambda.has(a, t);
     inline function optional(type:TokenType):Void if (match(type)) {}
-    inline function match(types:TokenType...):Bool {
+    inline function match(...types:TokenType):Bool {
         for (type in types) if (check(type)) { advance(); return true; }
         return false;
     }
