@@ -146,30 +146,30 @@ class Lexer {
     }
 
     inline function isAtEnd():Bool return current >= source.length;
-    inline function peek():String return isAtEnd() ? "\0" : source.charAt(current);
-    inline function peekNext():String return current + 1 >= source.length ? "\0" : source.charAt(current + 1);
+	inline function peek():String return isAtEnd() ? "" : source.charAt(current);
+	inline function peekNext():String return current + 1 >= source.length ? "" : source.charAt(current + 1);
 
-    function advance():String {
-        var c = source.charAt(current++);
-        if (c != "\n") column++; else column = 1;
-        return c;
-    }
+	function advance():String {
+		var c = source.charAt(current++);
+		if (c != "\n") column++; else column = 1;
+		return c;
+	}
 
-    function match(expected:String):Bool {
-        if (isAtEnd() || source.charAt(current) != expected) return false;
-        advance();
-        return true;
-    }
+	function match(expected:String):Bool {
+		if (isAtEnd() || source.charAt(current) != expected) return false;
+		advance();
+		return true;
+	}
 
-    function add(out:Array<Token>, type:TokenType):Void {
-        out.push(new Token(type, source.substring(start, current), null, line, tokenColumn));
-    }
+	function add(out:Array<Token>, type:TokenType):Void {
+		out.push(new Token(type, source.substring(start, current), null, line, tokenColumn));
+	}
 
-    function error(message:String):Void {
-        throw new EllawyError(message, line, tokenColumn, file);
-    }
+	function error(message:String):Void {
+		throw new EllawyError(message, line, tokenColumn, file);
+	}
 
-    static inline function isDigit(c:String):Bool return c >= "0" && c <= "9";
-    static inline function isAlpha(c:String):Bool return (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c == "_";
-    static inline function isAlphaNumeric(c:String):Bool return isAlpha(c) || isDigit(c);
+	static inline function isDigit(c:String):Bool return c >= "0" && c <= "9";
+	static inline function isAlpha(c:String):Bool return (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c == "_";
+	static inline function isAlphaNumeric(c:String):Bool return isAlpha(c) || isDigit(c);
 }
