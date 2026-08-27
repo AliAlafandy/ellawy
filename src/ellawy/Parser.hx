@@ -37,14 +37,14 @@ class Parser {
     }
 
     function importStatement():Stmt {
-        var path = consume(Identifier, "Expected import path.").lexeme;
-        while (match(Dot)) path += "." + consume(Identifier, "Expected identifier after '.'.").lexeme;
+        var path = consume(TokenType.Identifier, "Expected import path.").lexeme;
+        while (match(Dot)) path += "." + consume(TokenType.Identifier, "Expected identifier after '.'.").lexeme;
         optional(Semicolon);
         return Import(path);
     }
 
     function localStatement():Stmt {
-        var name = consume(Identifier, "Expected variable name.");
+        var name = consume(TokenType.Identifier, "Expected variable name.");
         var typeName:Null<String> = null;
         if (match(Colon)) typeName = typeNameParser();
         var value:Null<Expr> = null;
@@ -54,12 +54,12 @@ class Parser {
     }
 
     function functionDeclaration(isStatic:Bool, visibility:String):FunctionDecl {
-        var name = consume(Identifier, "Expected function name.").lexeme;
+        var name = consume(TokenType.Identifier, "Expected function name.").lexeme;
         consume(LeftParen, "Expected '('.");
         var parameters:Array<Parameter> = [];
         if (!check(RightParen)) {
             do {
-                var pName = consume(Identifier, "Expected parameter name.").lexeme;
+                var pName = consume(TokenType.Identifier, "Expected parameter name.").lexeme;
                 var pType:Null<String> = null;
                 var defaultValue:Null<Expr> = null;
                 if (match(Colon)) pType = typeNameParser();
@@ -80,7 +80,7 @@ class Parser {
     }
 
     function classDeclaration():ClassDecl {
-        var name = consume(Identifier, "Expected class name.").lexeme;
+        var name = consume(TokenType.Identifier, "Expected class name.").lexeme;
         var extendsName:Null<String> = null;
         if (match(Extends)) extendsName = typeNameParser();
         var members:Array<Stmt> = [];
@@ -182,7 +182,7 @@ class Parser {
                 consume(RightParen, "Expected ')'.");
                 e = Call(e, args);
             } else if (match(Dot)) {
-                e = Member(e, consume(Identifier, "Expected member name.").lexeme);
+                e = Member(e, consume(TokenType.Identifier, "Expected member name.").lexeme);
             } else break;
         }
         return e;
@@ -202,7 +202,7 @@ class Parser {
             consume(RightParen, "Expected ')'.");
             return NewObject(className, args);
         }
-        if (match(Identifier)) return Identifier(previous().lexeme);
+        if (match(TokenType.Identifier)) return Identifier(previous().lexeme);
         if (match(LeftParen)) {
             var e = expression();
             consume(RightParen, "Expected ')'.");
@@ -222,7 +222,7 @@ class Parser {
         var fields:Array<ObjectField> = [];
         if (!check(RightBrace)) {
             do {
-                var name = consume(Identifier, "Expected object field name.").lexeme;
+                var name = consume(TokenType.Identifier, "Expected object field name.").lexeme;
                 consume(Colon, "Expected ':' after object field name.");
                 fields.push({name:name, value:expression()});
             } while (match(Comma));
@@ -232,8 +232,8 @@ class Parser {
     }
 
     function typeNameParser():String {
-        var result = consume(Identifier, "Expected type name.").lexeme;
-        while (match(Dot)) result += "." + consume(Identifier, "Expected type name.").lexeme;
+        var result = consume(TokenType.Identifier, "Expected type name.").lexeme;
+        while (match(Dot)) result += "." + consume(TokenType.Identifier, "Expected type name.").lexeme;
         return result;
     }
 
