@@ -1,5 +1,10 @@
 package ellawy;
 
+import ellawy.AST;
+import ellawy.Token;
+import ellawy.Parser;
+import Ellawy;
+
 class Lexer {
     static final keywords:Map<String, TokenType> = [
         "local" => Local, "function" => Function, "return" => Return, "end" => End,
