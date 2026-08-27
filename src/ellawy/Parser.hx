@@ -247,14 +247,15 @@ class Parser {
         return new EllawyError(message, t.line, t.column, file);
     }
 
+    function match(...types:TokenType):Bool {
+        for (type in types) if (check(type)) { advance(); return true; }
+        return false;
+    }
+
     inline function check(type:TokenType):Bool return peek().type == type;
     inline function peek():Token return tokens[current];
     inline function previous():Token return tokens[current - 1];
     inline function advance():Token return tokens[current++];
     inline function contains(a:Array<TokenType>, t:TokenType):Bool return Lambda.has(a, t);
     inline function optional(type:TokenType):Void if (match(type)) {}
-    inline function match(...types:TokenType):Bool {
-        for (type in types) if (check(type)) { advance(); return true; }
-        return false;
-    }
 }
