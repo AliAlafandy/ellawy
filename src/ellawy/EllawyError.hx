@@ -1,5 +1,8 @@
 package ellawy;
 
+import ellawy.Compiler;
+import ellawy.Ellawy;
+
 class EllawyError extends haxe.Exception {
     public final line:Int;
     public final column:Int;
