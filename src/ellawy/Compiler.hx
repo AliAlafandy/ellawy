@@ -1,5 +1,11 @@
 package ellawy;
 
+import ellawy.AST;
+import ellawy.Token;
+import ellawy.Lexer;
+import ellawy.Parser;
+import ellawy.HaxeGenerator;
+
 class Compiler {
     public static inline final VERSION:String = "1.0.0";
 
