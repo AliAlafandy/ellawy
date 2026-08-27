@@ -141,7 +141,7 @@ class Lexer {
     function identifier(out:Array<Token>):Void {
         while (isAlphaNumeric(peek())) advance();
         var text = source.substring(start, current);
-        var type = keywords.exists(text) ? keywords.get(text) : Identifier;
+        var type = keywords.exists(text) ? keywords.get(text) : TokenType.Identifier;
         out.push(new Token(type, text, null, line, tokenColumn));
     }
 
