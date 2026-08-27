@@ -3,7 +3,8 @@ package ellawy;
 import ellawy.AST;
 import ellawy.Token;
 import ellawy.Parser;
-import Ellawy;
+import ellawy.Compiler;
+import ellawy.Ellawy;
 
 class Lexer {
     static final keywords:Map<String, TokenType> = [
