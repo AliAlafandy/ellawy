@@ -5,6 +5,7 @@ import ellawy.Token;
 import ellawy.Lexer;
 import ellawy.Parser;
 import ellawy.HaxeGenerator;
+import ellawy.Compiler;
 
 class Ellawy {
     public static inline final VERSION:String = Version.STRING;
