@@ -3,8 +3,8 @@ package ellawy;
 enum Expr {
     Literal(value:Dynamic);
     Identifier(name:String);
-    Unary(operator:String, right:Expr);
-    Binary(left:Expr, operator:String, right:Expr);
+    Unary(op:String, right:Expr);
+    Binary(left:Expr, op:String, right:Expr);
     Call(callee:Expr, arguments:Array<Expr>);
     Member(object:Expr, name:String);
     ArrayLiteral(items:Array<Expr>);
