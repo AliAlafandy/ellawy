@@ -4,7 +4,8 @@ import ellawy.AST;
 import ellawy.Token;
 import ellawy.Lexer;
 import ellawy.Parser;
-import Ellawy;
+import ellawy.Compiler;
+import ellawy.Ellawy;
 
 class HaxeGenerator {
     final out:StringBuf = new StringBuf();
