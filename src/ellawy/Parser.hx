@@ -1,5 +1,11 @@
 package ellawy;
 
+import ellawy.AST;
+import ellawy.Token;
+import ellawy.Lexer;
+import ellawy.Compiler;
+import ellawy.Ellawy;
+
 class Parser {
     final tokens:Array<Token>;
     final file:String;
