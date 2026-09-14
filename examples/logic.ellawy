@@ -1,4 +1,5 @@
 function onCheck(num=float, status:string)
+{
 	if num > 10 then
 	{
 		"status": "big"
@@ -6,4 +7,5 @@ function onCheck(num=float, status:string)
 		"status": "small"
 	}
 	end
+}
 end
