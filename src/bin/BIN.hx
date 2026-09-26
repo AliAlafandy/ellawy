@@ -2,7 +2,11 @@ package bin;
 
 import haxe.io.Bytes;
 
+import bin.BINArray;
+import bin.BINObject;
+import bin.BINParser;
 import bin.BINValue;
+import bin.BINWriter;
 
 /**
  * Public API for Ellawy's portable .bin format.
