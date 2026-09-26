@@ -279,7 +279,7 @@ class BINParser {
         offset += 4;
 
         if (value >= 0x80000000)
-            value -= 4294967296;
+            value = Std.int(value - 4294967296);
 
         return value;
     }
