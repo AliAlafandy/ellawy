@@ -13,14 +13,14 @@ import bin.BINWriter;
  *
  * BIN v1 layout:
  *
- *   8 bytes  magic: "ELLABIN\0"
+ *   8 bytes  magic: "BIN"
  *   2 bytes  version
  *   2 bytes  flags
  *   4 bytes  payload length
  *   N bytes  root value
  */
 class BIN {
-    public static inline final MAGIC:String = "ELLABIN";
+    public static inline final MAGIC:String = "BIN";
     public static inline final VERSION:Int = 1;
     public static inline final HEADER_SIZE:Int = 16;
     public static inline final FLAG_NONE:Int = 0;
