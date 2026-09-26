@@ -177,9 +177,3 @@ class BIN {
         return BINParser.cloneValue(value);
     }
 }
-
-class BINException extends haxe.Exception {
-    public function new(message:String) {
-        super(message);
-    }
-}
