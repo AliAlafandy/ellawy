@@ -1,5 +1,7 @@
 package bin;
 
+import bin.BINValue;
+
 class BINArray {
     private final values:Array<BINValue>;
 
