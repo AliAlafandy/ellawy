@@ -2,6 +2,8 @@ package bin;
 
 import haxe.ds.StringMap;
 
+import bin.BINValue;
+
 class BINObject {
     private var fields:StringMap<BINValue>;
     private final order:Array<String>;
