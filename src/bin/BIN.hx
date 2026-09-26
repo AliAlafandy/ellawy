@@ -20,7 +20,7 @@ import bin.BINWriter;
  *   N bytes  root value
  */
 class BIN {
-    public static inline final MAGIC:String = "ELLABIN\0";
+    public static inline final MAGIC:String = "ELLABIN";
     public static inline final VERSION:Int = 1;
     public static inline final HEADER_SIZE:Int = 16;
     public static inline final FLAG_NONE:Int = 0;
