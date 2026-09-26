@@ -2,6 +2,8 @@ package bin;
 
 import haxe.io.Bytes;
 
+import bin.BINValue;
+
 class BINParser {
     public static inline var DEFAULT_MAX_DEPTH:Int = 256;
     public static inline var DEFAULT_MAX_STRING_BYTES:Int = 16 * 1024 * 1024;
