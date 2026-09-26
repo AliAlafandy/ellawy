@@ -3,6 +3,8 @@ package bin;
 import haxe.io.Bytes;
 import haxe.io.BytesBuffer;
 
+import bin.BINValue;
+
 class BINWriter {
     public static inline var DEFAULT_MAX_DEPTH:Int = 256;
     public static inline var DEFAULT_MAX_STRING_BYTES:Int = 16 * 1024 * 1024;
