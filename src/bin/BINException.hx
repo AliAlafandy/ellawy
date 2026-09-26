@@ -1,3 +1,5 @@
+package bin;
+
 import bin.BIN;
 
 class BINException extends haxe.Exception {
