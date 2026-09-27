@@ -114,7 +114,7 @@ class BINParser {
     }
 
     private function readMagic():Void {
-        var magic = Bytes.ofString(BIN.MAGIC);
+        /*var magic = Bytes.ofString(BIN.MAGIC);
 
         ensure(magic.length);
 
@@ -125,7 +125,7 @@ class BINParser {
                 );
         }
 
-        offset += magic.length;
+        offset += magic.length;*/
     }
 
     private function readNode(depth:Int):BINValue {
