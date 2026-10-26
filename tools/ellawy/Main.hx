@@ -11,8 +11,22 @@ class Main {
             return;
         }
 
-        if (args[0] == "version" || args[0] == "--version") {
-            Sys.println("Ellawy " + ellawy.Version.STRING);
+        if (args[0] == "run") {
+            if (args.length < 2) {
+                Sys.stderr().writeString("Usage: haxelib run ellawy run <input.ellawy>\n");
+                Sys.exit(1);
+            }
+            var input = args[1];
+            try {
+                ellawy.Ellawy.interpretFile(input);
+                Sys.println("Ellawy: executed " + input);
+            } catch (e:ellawy.EllawyError) {
+                Sys.stderr().writeString(e.message + "\n");
+                Sys.exit(1);
+            } catch (e:haxe.Exception) {
+                Sys.stderr().writeString("Ellawy Runtime Error: " + e.message + "\n");
+                Sys.exit(1);
+            }
             return;
         }
 
