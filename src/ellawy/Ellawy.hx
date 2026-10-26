@@ -142,8 +142,12 @@ class Ellawy {
     }
 
     public static function interpretFile(path:String):Dynamic {
+        #if sys
         var source = sys.io.File.getContent(path);
         return interpret(source, path);
+        #else
+        return null;
+        #end
     }
 }
 
