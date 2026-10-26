@@ -1,5 +1,13 @@
 package ellawy;
 
+import ellawy.AST.Stmt;
+import ellawy.AST;
+import ellawy.Token;
+import ellawy.Lexer;
+import ellawy.Parser;
+import ellawy.HaxeGenerator;
+import ellawy.Ellawy;
+
 class Interpreter {
     public var environment:Map<String, Dynamic>;
     var file:String;
