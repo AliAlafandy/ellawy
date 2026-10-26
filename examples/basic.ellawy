@@ -1,5 +1,17 @@
-function onTest(print:string)
+function onGame()
 {
-	"print": "hello world"
+    print("Ellawy script loaded successfully!");
+    
+    if PlayState.instance != null {
+        print("PlayState is ready!");
+    }
+}
+end
+
+function onUpdate(elapsed:Float)
+{
+    if PlayState.instance != null and PlayState.instance.player != null {
+        PlayState.instance.player.angle += 100 * elapsed;
+    }
 }
 end
