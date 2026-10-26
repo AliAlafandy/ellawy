@@ -85,7 +85,7 @@ class Interpreter {
                     environment = new Map();
                     for (k in prevEnv.keys()) environment.set(k, prevEnv.get(k));
                     
-                    for (i in 0...Math.min(args.length, decl.parameters.length)) {
+                    for (i in 0...Std.int(Math.min(args.length, decl.parameters.length))) {
                         environment.set(decl.parameters[i].name, args[i]);
                     }
                     
@@ -118,7 +118,7 @@ class Interpreter {
                                         for (k in prevEnv.keys()) environment.set(k, prevEnv.get(k));
                                         environment.set("self", obj);
                                         
-                                        for (i in 0...Math.min(mArgs.length, fDecl.parameters.length)) {
+                                        for (i in 0...Std.int(Math.min(mArgs.length, fDecl.parameters.length))) {
                                             environment.set(fDecl.parameters[i].name, mArgs[i]);
                                         }
                                         
