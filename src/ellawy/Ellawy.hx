@@ -134,6 +134,17 @@ class Ellawy {
             target: "Haxe"
         };
     }
+
+    public static function interpret(source:String, file:String = null):Dynamic {
+        var ast = parse(source, file);
+        var interpreter = new Interpreter(file);
+        return interpreter.interpret(ast);
+    }
+
+    public static function interpretFile(path:String):Dynamic {
+        var source = sys.io.File.getContent(path);
+        return interpret(source, path);
+    }
 }
 
 typedef EllawyInfo = {
