@@ -10,6 +10,7 @@ enum Expr {
     ArrayLiteral(items:Array<Expr>);
     ObjectLiteral(fields:Array<ObjectField>);
     NewObject(className:String, arguments:Array<Expr>);
+    Assign(target:Expr, value:Expr);
 }
 
 typedef ObjectField = {
