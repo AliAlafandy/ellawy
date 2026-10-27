@@ -169,7 +169,13 @@ class Parser {
         return result;
     }
 
-    function expression():Expr return or();
+    function expression():Expr {
+        var e = or();
+        if (match(Equal)) {
+            return Assign(e, expression());
+        }
+        return e;
+    }
 
     function or():Expr {
         var e = and();
