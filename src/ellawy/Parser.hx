@@ -41,17 +41,18 @@ class Parser {
         if (match(Semicolon)) return Block([]);
         
         if ((check(TokenType.Identifier) || check(StringLiteral)) && peekAt(1).type == Colon) {
-            var fields:Array<ObjectField> = [];
-            var name:String;
-            if (check(TokenType.Identifier)) {
-                name = consume(TokenType.Identifier, "Expected field name.").lexeme;
-            } else {
-                name = consume(StringLiteral, "Expected field name.").literal;
-            }
-            consume(Colon, "Expected ':' after field name.");
-            fields.push({name: name, value: expression()});
+            var nameToken = advance();
+            var name:String = nameToken.type == StringLiteral ? nameToken.literal : nameToken.lexeme;
+            
+            consume(Colon, "Expected ':' after name.");
+            var valueExpr = expression();
             optional(Semicolon);
-            return Expression(ObjectLiteral(fields));
+            
+            if (name == "print" || name == "trace" || name == "warn" || name == "error") {
+                return Expression(Call(Identifier(name), [valueExpr]));
+            }
+            
+            return Expression(ObjectLiteral([{name: name, value: valueExpr}]));
         }
         
         return Expression(expression());
