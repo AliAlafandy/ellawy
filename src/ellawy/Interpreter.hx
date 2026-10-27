@@ -150,6 +150,19 @@ class Interpreter {
     function evaluate(expr:Expr):Dynamic {
         return switch expr {
             case Literal(value): value;
+            case Assign(target, value):
+                var val = evaluate(value);
+                switch target {
+                    case Identifier(name):
+                        environment.set(name, val);
+                    case Member(objExpr, propName):
+                        var obj = evaluate(objExpr);
+                        if (obj == null) throw new EllawyError('Cannot set property "$propName" on null.', 0, 0, file);
+                        Reflect.setProperty(obj, propName, val);
+                    default:
+                        throw new EllawyError('Invalid assignment target.', 0, 0, file);
+                }
+                return val;
             case Identifier(name):
                 if (environment.exists(name)) environment.get(name) 
                 else throw new EllawyError('Undefined variable "$name".', 0, 0, file);
