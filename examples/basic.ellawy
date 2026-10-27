@@ -1,5 +1,9 @@
 function onTest(print:string)
 {
-	"print": "hello world"
+	"print": "hello world" //an object do nothing ig?
+	print("hello world")
+    trace("This is a trace message")
+    warn("This is a warning")
+    error("This is an error")
 }
 end
