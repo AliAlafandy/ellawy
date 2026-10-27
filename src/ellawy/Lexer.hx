@@ -10,7 +10,7 @@ class Lexer {
     static final keywords:Map<String, TokenType> = [
         "local" => Local, "function" => Function, "return" => Return, "end" => End,
         "class" => Class, "import" => Import, "true" => True, "false" => False,
-        "null" => Null, "if" => If, "else" => Else, "while" => While,
+        "null" => Null, "if" => If, "then" => Then, "else" => Else, "while" => While,
         "for" => For, "in" => In, "new" => New, "public" => Public,
         "private" => Private, "static" => Static, "extends" => Extends,
         "and" => And, "or" => Or, "not" => Not
