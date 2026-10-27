@@ -15,6 +15,7 @@ enum TokenType {
     False;
     Null;
     If;
+    Then;
     Else;
     While;
     For;
