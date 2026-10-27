@@ -1,6 +1,11 @@
 function onTest(print:string)
 {
 	"print": "hello world"
+    "warn": "This is a yellow warning"
+    "error": "This is a red error"
+
+	--both work--
+
 	print("hello world")
     trace("This is a trace message")
     warn("This is a warning")
