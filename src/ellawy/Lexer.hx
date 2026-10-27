@@ -130,12 +130,22 @@ class Lexer {
 
     function number(out:Array<Token>):Void {
         while (isDigit(peek())) advance();
-        if (peek() == "." && isDigit(peekNext())) {
+        
+        if (current - start == 1 && source.substring(start, current) == "0" && (peek() == "x" || peek() == "X")) {
+            advance();
+            while (isHexDigit(peek())) advance();
+        } else if (peek() == "." && isDigit(peekNext())) {
             advance();
             while (isDigit(peek())) advance();
         }
+        
         var text = source.substring(start, current);
-        out.push(new Token(NumberLiteral, text, Std.parseFloat(text), line, tokenColumn));
+        var value:Dynamic = (text.indexOf("x") != -1 || text.indexOf("X") != -1) ? Std.parseInt(text) : Std.parseFloat(text);
+        out.push(new Token(NumberLiteral, text, value, line, tokenColumn));
+    }
+
+    static inline function isHexDigit(c:String):Bool {
+        return isDigit(c) || (c >= "a" && c <= "f") || (c >= "A" && c <= "F");
     }
 
     function identifier(out:Array<Token>):Void {
