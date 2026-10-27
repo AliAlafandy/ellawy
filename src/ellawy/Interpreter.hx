@@ -182,10 +182,16 @@ class Interpreter {
             case Call(callee, arguments):
                 var target = evaluate(callee);
                 var args = arguments.map(evaluate);
-                if (Reflect.isFunction(target)) {
+                var isCallable = Reflect.isFunction(target);
+                if (!isCallable && target != null) {
+                    if (Type.typeof(target).match(TFunction)) {
+                        isCallable = true;
+                    }
+                }
+                if (isCallable) {
                     return (cast target : Array<Dynamic> -> Dynamic)(args);
                 }
-                throw new EllawyError('Can only call functions and classes.', 0, 0, file);
+                throw new EllawyError('Can only call functions and classes. (Target was: ${Type.typeof(target)})', 0, 0, file);
             case Member(object, name):
                 var obj = evaluate(object);
                 if (obj == null) throw new EllawyError('Cannot access "$name" on null.', 0, 0, file);
