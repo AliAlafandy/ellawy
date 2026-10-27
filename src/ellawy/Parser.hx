@@ -24,16 +24,43 @@ class Parser {
         return result;
     }
 
+    inline function peekAt(offset:Int):Token {
+        var idx = current + offset;
+        return idx < tokens.length ? tokens[idx] : tokens[tokens.length - 1];
+    }
+
     function statement():Stmt {
         if (match(Import)) return importStatement();
         if (match(Local)) return localStatement();
-        if (match(Return)) return Return(check(End) || check(Else) || check(EOF) ? null : expression());
+        if (match(Return)) return Return(check(End) || check(Else) || check(EOF) || check(RightBrace) ? null : expression());
         if (match(Function)) return Function(functionDeclaration(false, "public"));
         if (match(Class)) return Class(classDeclaration());
         if (match(If)) return ifStatement();
         if (match(While)) return whileStatement();
+        if (match(LeftBrace)) return blockStatement();
         if (match(Semicolon)) return Block([]);
+        
+        if ((check(TokenType.Identifier) || check(StringLiteral)) && peekAt(1).type == Colon) {
+            var fields:Array<ObjectField> = [];
+            var name:String;
+            if (check(TokenType.Identifier)) {
+                name = consume(TokenType.Identifier, "Expected field name.").lexeme;
+            } else {
+                name = consume(StringLiteral, "Expected field name.").literal;
+            }
+            consume(Colon, "Expected ':' after field name.");
+            fields.push({name: name, value: expression()});
+            optional(Semicolon);
+            return Expression(ObjectLiteral(fields));
+        }
+        
         return Expression(expression());
+    }
+
+    function blockStatement():Stmt {
+        var stmts = parseUntil([RightBrace, End, EOF]);
+        match(RightBrace);
+        return Block(stmts);
     }
 
     function importStatement():Stmt {
@@ -62,15 +89,22 @@ class Parser {
                 var pName = consume(TokenType.Identifier, "Expected parameter name.").lexeme;
                 var pType:Null<String> = null;
                 var defaultValue:Null<Expr> = null;
-                if (match(Colon)) pType = typeNameParser();
-                if (match(Equal)) defaultValue = expression();
+                
+                if (match(Colon) || match(Equal)) {
+                    pType = typeNameParser();
+                }
+                if (match(Equal)) {
+                    defaultValue = expression();
+                }
                 parameters.push({name:pName, typeName:pType, defaultValue:defaultValue});
             } while (match(Comma));
         }
         consume(RightParen, "Expected ')'.");
         var returnType:Null<String> = null;
         if (match(Colon)) returnType = typeNameParser();
-        var body = parseUntil([End]);
+        
+        var body = parseUntil([End, RightBrace]);
+        match(RightBrace);
         consume(End, "Expected 'end' after function.");
         optional(Semicolon);
         return {
@@ -107,9 +141,13 @@ class Parser {
 
     function ifStatement():Stmt {
         var condition = expression();
-        var thenBranch = parseUntil([Else, End]);
+        match(Then);
+        var thenBranch = parseUntil([Else, End, RightBrace]);
         var elseBranch:Null<Array<Stmt>> = null;
-        if (match(Else)) elseBranch = parseUntil([End]);
+        if (match(Else)) {
+            elseBranch = parseUntil([End, RightBrace]);
+        }
+        match(RightBrace);
         consume(End, "Expected 'end' after if.");
         optional(Semicolon);
         return If(condition, thenBranch, elseBranch);
@@ -117,7 +155,8 @@ class Parser {
 
     function whileStatement():Stmt {
         var condition = expression();
-        var body = parseUntil([End]);
+        var body = parseUntil([End, RightBrace]);
+        match(RightBrace);
         consume(End, "Expected 'end' after while.");
         optional(Semicolon);
         return While(condition, body);
@@ -222,7 +261,14 @@ class Parser {
         var fields:Array<ObjectField> = [];
         if (!check(RightBrace)) {
             do {
-                var name = consume(TokenType.Identifier, "Expected object field name.").lexeme;
+                var name:String;
+                if (check(TokenType.Identifier)) {
+                    name = consume(TokenType.Identifier, "Expected object field name.").lexeme;
+                } else if (check(StringLiteral)) {
+                    name = consume(StringLiteral, "Expected object field name.").literal;
+                } else {
+                    throw error("Expected identifier or string for object field name.");
+                }
                 consume(Colon, "Expected ':' after object field name.");
                 fields.push({name:name, value:expression()});
             } while (match(Comma));
@@ -232,8 +278,10 @@ class Parser {
     }
 
     function typeNameParser():String {
+        match(LeftBrace);
         var result = consume(TokenType.Identifier, "Expected type name.").lexeme;
         while (match(Dot)) result += "." + consume(TokenType.Identifier, "Expected type name.").lexeme;
+        match(RightBrace);
         return result;
     }
 
