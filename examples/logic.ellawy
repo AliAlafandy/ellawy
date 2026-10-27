@@ -1,9 +1,11 @@
-function onCheck(num:Float, status:String)
+function onCheck(num=float, status:string)
 {
-    if num > 10 {
-        print("big");
-    } else {
-        print("small");
-    } end
+	if num > 10 then
+	{
+		"status": "big"
+	} else {
+		"status": "small"
+	}
+	end
 }
 end
