@@ -1,6 +1,5 @@
-function onConfig()
+function onConfig(server:string, host:{string}, port:{float})
 {
-    local config = { "host": "localhost", "port": 8080 };
-    print("Server: " + config.host + ":" + config.port);
+  "server": {"host": "localhost", "port": 8080}
 }
 end
