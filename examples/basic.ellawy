@@ -1,4 +1,4 @@
-function onTest(print:string)
+function onTest(msg:string)
 {
 	"print": "hello world"
     "warn": "This is a yellow warning"
