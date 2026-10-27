@@ -30,9 +30,20 @@ class Parser {
     }
 
     function statement():Stmt {
-        if (match(Import)) return importStatement();
+        if (match(Import)) {
+            var stmt = importStatement();
+            optional(Comma);
+            optional(Semicolon);
+            return stmt;
+        }
         if (match(Local)) return localStatement();
-        if (match(Return)) return Return(check(End) || check(Else) || check(EOF) || check(RightBrace) ? null : expression());
+        
+        if (match(Return)) {
+            var stmt = Return(check(End) || check(Else) || check(EOF) || check(RightBrace) ? null : expression());
+            optional(Comma);
+            optional(Semicolon);
+            return stmt;
+        }
         if (match(Function)) return Function(functionDeclaration(false, "public"));
         if (match(Class)) return Class(classDeclaration());
         if (match(If)) return ifStatement();
@@ -46,6 +57,7 @@ class Parser {
             
             consume(Colon, "Expected ':' after name.");
             var valueExpr = expression();
+            optional(Comma);
             optional(Semicolon);
             
             if (name == "print" || name == "trace" || name == "warn" || name == "error") {
@@ -55,7 +67,10 @@ class Parser {
             return Expression(ObjectLiteral([{name: name, value: valueExpr}]));
         }
         
-        return Expression(expression());
+        var stmt = Expression(expression());
+        optional(Comma);
+        optional(Semicolon);
+        return stmt;
     }
 
     function blockStatement():Stmt {
@@ -67,7 +82,6 @@ class Parser {
     function importStatement():Stmt {
         var path = consume(TokenType.Identifier, "Expected import path.").lexeme;
         while (match(Dot)) path += "." + consume(TokenType.Identifier, "Expected identifier after '.'.").lexeme;
-        optional(Semicolon);
         return Import(path);
     }
 
@@ -77,7 +91,9 @@ class Parser {
         if (match(Colon)) typeName = typeNameParser();
         var value:Null<Expr> = null;
         if (match(Equal)) value = expression();
-        optional(Semicolon);
+        
+        consume(Semicolon, "Expected ';' at the end of local variable declaration.");
+        
         return Local(name.lexeme, typeName, value);
     }
 
