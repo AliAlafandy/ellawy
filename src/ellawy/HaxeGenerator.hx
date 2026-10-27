@@ -118,6 +118,7 @@ class HaxeGenerator {
             case ObjectLiteral(fields):
                 "{" + fields.map(function(f) return f.name + ": " + expr(f.value)).join(", ") + "}";
             case NewObject(name, args): "new " + name + "(" + joinExpr(args) + ")";
+            case Assign(target, value): expr(target) + " = " + expr(value);
         };
     }
 
