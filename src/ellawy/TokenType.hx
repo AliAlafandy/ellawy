@@ -43,6 +43,7 @@ enum TokenType {
     Not;
 
     Dot;
+    DotDot;
     Comma;
     Colon;
     Semicolon;
