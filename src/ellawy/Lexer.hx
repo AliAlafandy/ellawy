@@ -61,7 +61,12 @@ class Lexer {
             case "!": add(out, match("=") ? NotEqual : Not);
             case "<": add(out, match("=") ? LessEqual : Less);
             case ">": add(out, match("=") ? GreaterEqual : Greater);
-            case ".": add(out, Dot);
+            case ".":
+                if (match(".")) {
+                    add(out, DotDot);
+                } else {
+                    add(out, Dot);
+                }
             case ",": add(out, Comma);
             case ":": add(out, Colon);
             case ";": add(out, Semicolon);
