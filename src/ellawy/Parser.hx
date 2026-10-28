@@ -219,7 +219,10 @@ class Parser {
 
     function term():Expr {
         var e = factor();
-        while (match(Plus, Minus)) e = Binary(e, previous().lexeme, factor());
+        while (match(Plus, Minus, DotDot)) {
+            var op = previous().lexeme == ".." ? "+" : previous().lexeme;
+            e = Binary(e, op, factor());
+        }
         return e;
     }
 
