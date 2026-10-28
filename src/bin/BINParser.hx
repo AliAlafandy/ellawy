@@ -114,18 +114,15 @@ class BINParser {
     }
 
     private function readMagic():Void {
-        /*var magic = Bytes.ofString(BIN.MAGIC);
-
+        var magic = Bytes.ofString(BIN.MAGIC);
         ensure(magic.length);
 
         for (i in 0...magic.length) {
             if (data.get(offset + i) != magic.get(i))
-                throw new BINException(
-                    "Invalid BIN magic header."
-                );
+                throw new BINException("Invalid BIN magic header. Expected '" + BIN.MAGIC + "'.");
         }
 
-        offset += magic.length;*/
+        offset += magic.length;
     }
 
     private function readNode(depth:Int):BINValue {
